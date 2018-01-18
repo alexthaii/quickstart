@@ -12,6 +12,7 @@ node {
       // Run the maven build
       checkout scm
       if (isUnix()) {
+         sh "'ls'"
          sh "'ls helloworld-html5'"
          sh "'${mvnHome}/bin/mvn -f helloworld-html5/pom.xml' -Dmaven.test.failure.ignore clean package"
       }
