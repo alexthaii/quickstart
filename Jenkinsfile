@@ -10,14 +10,11 @@ node {
       mvnHome = tool 'M3'
       dockerHome = tool 'docker'
    }
+   
    stage('Build') {
         // Run the maven build
         sh "'${mvnHome}/bin/mvn' -f helloworld-html5/pom.xml -Dmaven.test.failure.ignore clean package"
         // Run docker build
-        //app = sh "'${dockerHome}/bin/docker' build -t localhost:8081/docker-snapshots/helloworld helloworld-html5"
-        dockerfile {
-            filename 'Dockerfile'
-            dir 'helloworld-html5'
-        }
+        docker.build("localhost:8081/docker-snapshots", "-f helloworld-html5/Dockerfile .")
    }
 }
