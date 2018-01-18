@@ -11,7 +11,8 @@ node {
    stage('Build') {
       // Run the maven build
       if (isUnix()) {
-         sh "'ls ${workspace}'"
+         sh "'ls'"
+         sh "'pwd'"
          sh "'${mvnHome}/bin/mvn -f ${workspace}/helloworld-html5/pom.xml' -Dmaven.test.failure.ignore clean package"
       }
    }
