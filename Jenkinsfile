@@ -18,3 +18,5 @@ node {
         docker.build("localhost:8081/docker-snapshots", "-f helloworld-html5/Dockerfile .")
    }
 }
+
+agent { dockerfile true }
