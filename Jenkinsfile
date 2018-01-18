@@ -10,9 +10,9 @@ node {
       mvnHome = tool 'M3'
    }
    stage('Build') {
-      // Run the maven build
-      if (isUnix()) {
-         sh "'${mvnHome}/bin/mvn' -f helloworld-html5/pom.xml -Dmaven.test.failure.ignore clean package"
-      }
+        // Run the maven build
+        sh "'${mvnHome}/bin/mvn' -f helloworld-html5/pom.xml -Dmaven.test.failure.ignore clean package"
+        // Run docker build
+        app = docker.build("localhost:8081/docker-snapshots/helloworld")
    }
 }
