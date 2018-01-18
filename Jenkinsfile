@@ -14,11 +14,6 @@ node {
    stage('Build') {
         // Run the maven build
         sh "'${mvnHome}/bin/mvn' -f helloworld-html5/pom.xml -Dmaven.test.failure.ignore clean package"
+         docker.build("localhost:8081/docker-snapshots:latest", "-f helloworld-html5/Dockerfile .")
    }
-}
-
-node('docker'){
-    stage('build'){
-        docker.build("localhost:8081/docker-snapshots:latest", "-f helloworld-html5/Dockerfile .")
-    }
 }
