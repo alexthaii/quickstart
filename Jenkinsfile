@@ -14,7 +14,7 @@ node {
         withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'artifactory', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
             sh "sudo '${dockerHome}/bin/docker' login -u $USERNAME -p $PASSWORD localhost:8081"
         }
-        sh "sudo '${dockerHome}/bin/docker' build -t localhost:8081/docker-snapshots:${BRANCH_NAME} -f helloworld-html5/Dockerfile ."
-        sh "sudo '${dockerHome}/bin/docker' push localhost:8081/docker-snapshots:${BRANCH_NAME}"
+        sh "sudo '${dockerHome}/bin/docker' build -t localhost:8081/docker-snapshots/helloworld:${BRANCH_NAME} -f helloworld-html5/Dockerfile ."
+        sh "sudo '${dockerHome}/bin/docker' push localhost:8081/docker-snapshots/helloworld:${BRANCH_NAME}"
    }
 }
