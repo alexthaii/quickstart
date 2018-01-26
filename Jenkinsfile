@@ -1,6 +1,7 @@
 node {
    def mvnHome
    def dockerHome
+   def dockerTag
    stage('Preparation') {
       checkout scm    
       mvnHome = tool 'M3'
@@ -14,7 +15,11 @@ node {
         withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'artifactory', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
             sh "sudo '${dockerHome}/bin/docker' login -u $USERNAME -p $PASSWORD localhost:8081"
         }
-        sh "sudo '${dockerHome}/bin/docker' build -t localhost:8081/docker-snapshots/helloworld:${BRANCH_NAME} -f helloworld-html5/Dockerfile ."
-        sh "sudo '${dockerHome}/bin/docker' push localhost:8081/docker-snapshots/helloworld:${BRANCH_NAME}"
+        dockerTag = sh(
+            script: 'echo ${BRANCH_NAME} | sed "s/^release\/\(.\+\)/\1/g; s/[^0-9A-Za-z.]/-/g")'
+            returnStdout: true
+        )
+        sh "sudo '${dockerHome}/bin/docker' build -t localhost:8081/docker-snapshots/helloworld:${dockerTag} -f helloworld-html5/Dockerfile ."
+        sh "sudo '${dockerHome}/bin/docker' push localhost:8081/docker-snapshots/helloworld:${dockerTag}"
    }
 }
