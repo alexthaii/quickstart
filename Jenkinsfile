@@ -16,7 +16,7 @@ node {
             sh "sudo '${dockerHome}/bin/docker' login -u $USERNAME -p $PASSWORD localhost:8081"
         }
         dockerTag = sh(
-            script: 'echo ${BRANCH_NAME} | sed "s/^release\/\(.\+\)/\1/g; s/[^0-9A-Za-z.]/-/g")'
+            script: 'echo ${BRANCH_NAME} | sed 's/^release\/\(.\+\)/\1/g; s/[^0-9A-Za-z.]/-/g')'
             returnStdout: true
         )
         sh "sudo '${dockerHome}/bin/docker' build -t localhost:8081/docker-snapshots/helloworld:${dockerTag} -f helloworld-html5/Dockerfile ."
