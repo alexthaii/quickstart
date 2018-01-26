@@ -10,7 +10,7 @@ node {
    
    script {
         def get_tag = $/eval 'echo ${BRANCH_NAME} | sed "s/^release\/\(.\+\)/\1/g; s/[^0-9A-Za-z.]/-/g")'/$
-        //dockerTag = sh(script: "${get_tag}", returnStdout: true)
+        dockerTag = sh(script: '${get_tag}', returnStdout: true)
    }
 
    stage('Build') {
